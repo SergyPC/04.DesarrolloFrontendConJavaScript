@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BEER FLIX</title>
+    <!-- styles -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="/src/css/styles.css">
+    <!-- icon -->
+    <link rel="icon" href="/src/images/favicon.png" sizes="32x32" type="image/png">
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav id="navbar" class="app-navbar no-search filter">
+      <div class="navbar-logo">
+        <a href="/" alt="BEER FLIX">BEER FLIX</a>
+      </div>
+      <div class="navbar-right-actions">
+        <div class="filter-container">
+          <!--Ponemos novalidate para que no salgan los errores (popups) por defecto del navegador,
+          ya que tenemos los estados validity para jugar con los estados de error-->
+          <form id="search-form" class="filter-input" novalidate>
+            <input data-pattern-mismatch="Input invalid" required placeholder="search your Beer" class="input search" type="text">
+            <input required placeholder="mm" name="month" id="month" class="input month" type="text" maxlength="2">
+            <input required placeholder="aaaa" name="year" id="year" class="input year" type="text" maxlength="4">
+            <button type="submit" class="button search">Search</button>
+          </form>
+        </div>
+        <div class="navbar-icon">
+          <i id="navbar-search" class="fas fa-search"></i>
+          <i id="navbar-close" class="fas fa-times"></i>
+        </div>
+      </div>
+    </nav>
+    <!-- navbar-end -->
+    <section id="banner">
+      <picture>
+        <source
+          srcset="
+            /src/images/brindis320.jpg 320w,
+            /src/images/brindis768.jpg 768w,
+            /src/images/brindis1280.jpg 1280w,
+          "
+          media="(min-width: 768px)"
+        >
+        <source
+          srcset="
+          /src/images/brindis500.jpg
+          "
+          media="(min-width: 320px)"
+        >
+        <img src="/src/images/brindis320.jpg" alt="Baner BeerFlix">
+        <!-- <img src="/src/images/brindis100.jpg" alt="Baner BeerFlix"> -->
+      </picture>
+      
+      <!-- <img src="/src/images/brindis1280.jpg" alt="Baner BeerFlix"> -->
+      <div class="contenedor">
+        <h2>Has llegado al mejor buscador de cervezas!</h2>
+        <p>¿Qué cerveza estás buscando?</p>
+      </div>
+      
+    </section>
+    
+    <!-- <section id="banner">
+      <img src="images/banner.jpg" alt="Banner">
+      <div class="contenedor">
+        <h2>Buscador de cervezas!</h2>
+        <p>¿Qué cerveza está buscando?</p>
+      </div>
+    </section> -->
+
+    <!-- main-section -->
+    <main>
+    </main>
+
+    <section id="detailSection" class="detail-section">
+    </section>
+
+    <!-- loader -->
+    <div id="loader" class="loader-container hide">
+      <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <!-- Loader end -->
+
+    <!-- main-section end -->
+    
+    
+    <!-- js.cookie: Librería que funciona en todos los browsers y su API es sencilla -->
+    <!-- (Hay que añadir js.cookie antes de routes.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+
+    <!-- js.cookie como mudulo (al ser un modulo Habría que usar el import) -->
+    <!-- <script
+          type="module"
+          src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.mjs"></script> -->
+    
+    <!-- PageJS para las rutas de los detalles de las cards -->
+    <!-- Con PageJS Conseguimos una navegación client-side (SPA: Single Page Aplication) -->
+    <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+    
+    <script type="module" src="/src/js/routes.js"></script>
+    <!--
+      Instalamos con npm http-server que era un servidor para poder utilizar los import de los modulos en los .js
+      Para ello tenemos que escribir nuestro script con module (IMPORTANTE: Añadimos type="module") 
+      de lo contrario no estaría soportado y no funcionaría.
+    -->
+  </body>
+</html>
