@@ -16,12 +16,14 @@ function replace(elemento) {
   }
 }
 */
+
 /*
 //La interfaz de esto podría ser llamar a un loaderReplace
 //La cual puede llama al metodo replace que tendrá el elemento loader (supongamos es un "document.getElementById('loader')", que sería el elemento)
 //Y luego se ejecuta de la siguiente manera, "('hide', 'show')", donde le pasamos que se oculte y le pasamos que se muestre
 const loaderReplace = replace(document.getElementById('loader'))('hide', 'show');
 */
+
 /*
 //Como la linea anterior es muy rara para escribirla con los parentesis así.
 //La forma util de utilizarla sería tener primero el LoaderUI/loaderReplace y utilizarlo donde queramos, con las clases que queramos
@@ -43,40 +45,3 @@ const loader = document.querySelector('#loader');
 //   loader.classList.add(addClass); //Realizamos un add de la clase que queremos crear
 // };
 export const renderLoader = replace(loader);
-
-
-/**Un ejemplo para ver este patrón es un multiplicador**/
-
-// const data = [1, 2, 3, 4];
-
-// data.map(item => item * 2) // [2, 4, 6, 8]
-//Es lo mismo:
-/* data.map(function(item){
-  return item * 2;
-} // [2, 4, 6, 8]*/
-
-// const multiplicar2 = item => item * 2;
-
-// data.map(multiplicar2) // [2, 4, 6, 8]
-
-// const multiplicador = valor => item => item * valor;
-//Es lo mismo:
-/*
-const multiplicador = function (valor) {
-  return fuction (item) {
-    return item * valor;
-  }
-}
-*/
-
-// const newMultiplicar2 = multiplicador(2);
-// "console.log(newMultiplicar2)"" devolvería la siguiente función:
-// function (item) {
-//   return item * 2;
-// }
-
-//data.map(newMultiplicar2) = multiplicador(2);
-// "console.log(newMultiplicar2)"" devolvería la siguiente función:
-// data.map(function (item) {
-//   return item * 2;
-// }) // [2, 4, 6, 8]

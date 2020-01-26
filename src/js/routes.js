@@ -11,7 +11,6 @@ const { getItem } = storage(STORAGE_TYPE);
 //Mantenemos la vista que teníamos:
 page('/', () => {
   // console.log('Route /');
-  
   // console.log("getItem(INPUT_STORAGE_ID):", getItem(INPUT_STORAGE_ID));
 
   //Eliminamos el formulario de comentarios (quotesFormtemplate) que pintamos en detail.js (Y que sólo es utilizado a nivel de detalle de cerveza para añadir comentarios sobre ella)
@@ -24,7 +23,6 @@ page('/', () => {
 //Creamos la vista de Detalle
 //El ":id" va ser macheado: /detail/123
 page('/detail/:id', (ctx) => {
-  //console.log('Detail');
   // console.log('Route /detail/:id');
   // console.log('Contexto (ctx):', ctx);
   //Dentro del Contexto (ctx) nos interesa el id que está en: ctx { params: { id: xx } }

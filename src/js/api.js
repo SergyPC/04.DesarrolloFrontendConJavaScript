@@ -8,9 +8,12 @@ const API_KEY = 'K8DSA0C-DKZ44V1-GEHS35S-R5ECFWV';
 //Por eso después se puede hacer el destructurado de esa api en shows.js (const { getShows } = api();), ya que es un objeto que tiene una función.
 //const api = (apiURL = 'https://api.tvmaze.com') => {
 //a apiURL le damos un valor por defecto: 
+//http://api.tvmaze.com/shows
+
 // https://beerflix-api.herokuapp.com/api/v1/beers?limit=10 //Devuelve las cervezas (max 10)
 // https://beerflix-api.herokuapp.com/api/v1/beers?search=beer&limit=10 //Devuelve las cervezas (max 10) cuya palabra clave sea beer
 // https://beerflix-api.herokuapp.com/api/v1/beers/20 //Devuelve la cerveza cuyo id=20
+
 const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
   //const searchAPIEndpoint = `${apiURL}/search/shows?q`;
   //EJEMPLO: http://api.tvmaze.com/search/shows?q=girls
@@ -21,8 +24,6 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
   const showsAPIEndpoint = `${apiURL}`;
   return {
     
-    //MI GETSHOWS
-
     getShowsTypeBeer: async (text, month, year) => {
       try {
         //const URL = text ? `https://api.tvmaze.com/search/shows?q=${text}` : showsAPIEndpoint;
@@ -40,12 +41,6 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
         }
         const data = await response.json(); //Devuelve la respuesta como Json
 
-        // console.log ("(Entramos en getShowsTypeBeer)");
-        // console.log ("URL:", URL);
-        // console.log ("data:", data);
-        // console.log ("data.beers:", data.beers);
-        // console.log("Estamos en getShowsTypeBeer (Mes y Año):", month, year)
-
         let filteredData = [];
 
         if(month || year) {
@@ -53,31 +48,18 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
             if(data.beers[key].firstBrewed){
               const mm = data.beers[key].firstBrewed.substring(0,2).toString();
               const aaaa = data.beers[key].firstBrewed.substring(3,7).toString();
-              // console.log("mm",mm);
-              // console.log("aaaa",aaaa);
-              // console.log ("data.beers[key].firstBrewed:", data.beers[key].firstBrewed);
-              
               if(month && year) {
-                // console.log("Entro en month && year");
-                // console.log(`mm: ${mm} | month.toString(): ${month.toString()} | aaaa: ${aaaa} | year.toString(): ${year.toString()}`);
                 if (mm === month && aaaa === year){
-                  // console.log("PUSH!! data.beers[key]:", data.beers[key]);
                   filteredData.push(data.beers[key]);
                 }
               }
               else if(month && !year) {
-                // console.log("Entro en month");
-                // console.log(`mm: ${mm} | month.toString(): ${month.toString()}`);
                 if (mm === month){
-                  // console.log("PUSH!! data.beers[key]:", data.beers[key]);
                   filteredData.push(data.beers[key]);
                 }
               }
               else if(!month && year) {
-                // console.log("Entro en year");
-                // console.log(`aaaa: ${aaaa} | year.toString(): ${year.toString()}`);
                 if (aaaa === year){
-                  // console.log("PUSH!! data.beers[key]:", data.beers[key]);
                   filteredData.push(data.beers[key]);
                 }
               }
@@ -87,14 +69,10 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
         else
           filteredData = data.beers;
 
-        // console.log ("filteredData:", filteredData);
-        // console.log ("data.beers[0].firstBrewed:", data.beers[0].firstBrewed);
-        // console.log ("(Salimos de getShowsTypeBeer)");
-
         const showsTypeBeer = filteredData;
         //const showsTypeBeer = data.beers;
-        return showsTypeBeer;
 
+        return showsTypeBeer;
         // const shows = data.map(result => {
         //   if (result.show) {
         //     return result.show;
@@ -107,38 +85,8 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
         throw err;
       }
     },
-    // getShows: async text => {
-    //   try {
-    //     const URL = text ? `https://api.tvmaze.com/search/shows?q=${text}` : showsAPIEndpoint;
-    //     const response = await fetch(URL, {
-    //       method: 'GET',
-    //       // headers: {
-    //       //   'X-API-KEY': API_KEY,
-    //       // },
-    //     });
-    //     if (!response.ok) {
-    //       throw new Error('Error retrieving shows');
-    //     }
-    //     const data = await response.json();
-    //     const shows = data.map(result => {
-    //       //Como la API devuelve JSONs diferentes dependiendo si llama a:
-    //       // - http://api.tvmaze.com/shows: Array de objetos show y dentro está otro objeto ([{show:{}}, {show:{}}, ...])
-    //       // - http://api.tvmaze.com/search/shows?q=girls: Array de objetos ([{}, {}, ...])
-    //       //Mira dendtro
-    //       if (result.show) { 
-    //         return result.show; //Si contiene .show ([{show:{}}, {show:{}}, ...])
-    //       }
-    //       return result; //Si NO contiene .show ([{}, {}, ...])
-    //     });
-    //     return shows;
-    //   } catch (err) {
-    //     console.error(err.message);
-    //     throw err;
-    //   }
-    // },
     getShowDetail: id => {
       //return fetch(`${showsAPIEndpoint}/${id}`)
-
       return fetch(`${showsAPIEndpoint}/${id}`, {
         method: 'GET',
          headers: {
@@ -163,19 +111,6 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
           throw err;
         });
     },
-    // getShowDetail: id => {
-    //   return fetch(`${showsAPIEndpoint}/${id}`)
-    //     .then(response => {
-    //       if (!response.ok) {
-    //         throw new Error(`Error retrieving show ${id}`);
-    //       }
-    //       return response.json();
-    //     })
-    //     .catch(err => {
-    //       console.error(err.message);
-    //       throw err;
-    //     });
-    // },
     getQuotes: async id => {
       try {
         const response = await fetch(`${apiURL}/quote/${id}`);

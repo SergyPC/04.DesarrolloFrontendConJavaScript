@@ -1,22 +1,6 @@
 import api from './api.js';
 import { renderLoader } from './ui.js';
 
-// const detailTeplate = ({ id, name, image, summary } = {}) => `
-//   <div class="detail-section">
-//     <header id="${id}">
-//       <div class="title-section">
-//         <h1>${name}</h1>
-//       </div>
-//       <div class="image-container">
-//         <img src="${image ? image.original : '/src/images/default.png'}" />
-//       </div>
-//     </header>
-//     <div class="content">
-//       ${summary}
-//     </div>
-//   </div>
-// `;
-
 const getMalts = (malt) => {
   let htmlCode = '';
   malt.forEach(element => {
@@ -36,7 +20,6 @@ const getHops = (malt) => {
 
 const { getShowDetail } = api();
 
-//const detailTeplate = ({ id, name, image, summary } = {}) => `
 const detailTeplate = ({ beerId, name, image, description, firstBrewed, price, ingredients } = {}) => `
   <div class="detail-section">
     <header id="${beerId}">
@@ -71,8 +54,6 @@ const detailTeplate = ({ beerId, name, image, description, firstBrewed, price, i
   </div>
 `;
 
-
-
 const renderDetail = async id => {
   try {
     renderLoader('hide', 'show');
@@ -82,12 +63,7 @@ const renderDetail = async id => {
       getQuotes(id),
     ]); 
     
-    // console.log("(Estamos en renderDetail) detail:",detail)
-    // console.log("(Estamos en renderDetail) detail.beer:",detail.beer)
-
-    //const template = detailTeplate(detail);
     const template = detailTeplate(detail.beer);
-
     //Cogemos el selector "main" del index.html
     const mainSection = document.querySelector('main');
     //Pintamos el formulario antes que los comentarios (quoteList) porque #quoteList forma parte del formulario (En quotesFormtemplate hay un DIV quoteList)
@@ -104,27 +80,6 @@ const renderDetail = async id => {
   }
 };
 
-// const renderDetail = async id => {
-//   try {
-//     renderLoader('hide', 'show');
-//     const [detail, quotes] = await Promise.all([
-//       getShowDetail(id),
-//       getQuotes(id),
-//     ]); // [resolveP1, resolveP2]
-//     const template = detailTeplate(detail);
-//     const mainSection = document.querySelector('main');
-//     renderForm(id);
-//     const quoteList = document.querySelector('#quoteList');
-//     quoteList.innerHTML = quotes.map(quoteTemplate).join(''); // [1, 3] -> '13'
-//     mainSection.innerHTML = template;
-//   } catch (err) {
-//     // manejo errores a través de un POPUP utilizando el DOM con selectores
-//     console.error(err);
-//   } finally {
-//     renderLoader('show', 'hide');
-//   }
-// };
-
 const quotesFormtemplate = `
   <div id="detail" class="detail-content"></div>
   <div class="quotes-list">
@@ -140,7 +95,6 @@ const quotesFormtemplate = `
     <button type="submit" class="button primary">Añadir comentario</button>
   </form>
 `;
-
 
 const QUOTES_API = 'https://quotes-api-keepcoding.herokuapp.com/api/v1'
 
@@ -185,23 +139,6 @@ export const removeForm = () => {
   const formSection = document.querySelector('#detailSection');
   formSection.innerHTML = '';
 };
-
-
-// const getDateFormat = (date) => {
-//   const fecha = new Date(date);
-//   const year = fecha.getFullYear();
-//   const month = fecha.getMonth();
-//   const day = fecha.getDate();
-//   console.log (`FECHA: ${day.toString()}/${month.toString()}/${year.toString()}`);
-//   return (`${day.toString()}/${month.toString()}/${year.toString()}`);
-// }
-
-// const quoteTemplate = ({ quote, date }) => `
-//   <div class="list-item">
-//     <p>${quote}</p>
-//     <span>${getDateFormat(date)}</span>
-//   </div>
-// `;
 
 const quoteTemplate = ({ quote, date }) => `
   <div class="list-item">

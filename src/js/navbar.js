@@ -62,11 +62,6 @@ closeIcon.addEventListener('click', () => {
 searchForm.addEventListener('submit', evt => {
   evt.preventDefault();
 
-  // console.log("searchInput.value:", searchInput.value);
-  // console.log("searchInput.validity.valid:", searchInput.validity.valid);
-  // console.log("searchInputMonth.value:", searchInputMonth.value);
-  // console.log("searchInputYear.value:", searchInputYear.value);
-
   //Limpiamos el formulario de comentarios del detalle de una cerveza
   const formSection = document.querySelector('#detailSection');
   formSection.innerHTML = '';
@@ -89,5 +84,3 @@ searchForm.addEventListener('submit', evt => {
   setItem(INPUT_STORAGE_MONTH, searchInputMonth.value); //setItem('navbar-input-month', searchInputMonth.value);
   setItem(INPUT_STORAGE_YEAR, searchInputYear.value); //setItem('navbar-input-year', searchInputYear.value);
 });
-
-

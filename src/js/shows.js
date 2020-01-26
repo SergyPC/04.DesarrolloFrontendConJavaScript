@@ -1,18 +1,13 @@
 import api from './api.js';
 import { renderLoader } from './ui.js';
 
-//Hacemos un poco de destructuring y nos quedamos con los getShows
+//Hacemos un poco de destructuring y nos quedamos con los getShows TypeBeer
 //El destructuring sale de la función "api()"" que está devolviendo un objeto que tiene getShows
 //Entonces si api devuelve objetos, a la variable la puedo destructurar
 //const { getShows } = api();
-
-//MI GETSHOWS
-//Hacemos un poco de destructuring y nos quedamos con los getShows
-//El destructuring sale de la función "api()"" que está devolviendo un objeto que tiene getShows
-//Entonces si api devuelve objetos, a la variable la puedo destructurar
 const { getShowsTypeBeer } = api();
 
-//Template de un show entero donde harcodeamos los valores que recogemos del API
+//Template de un showBeer entero donde harcodeamos los valores que recogemos del API
 const templateShowBeer = show => {
   return `
     <a href="/detail/${show.beerId}">
@@ -43,38 +38,6 @@ const templateShowBeer = show => {
     </a>
   `;
 };
-//Template de un show entero donde harcodeamos los valores que recogemos del API
-// const templateShow = show => {
-//   return `
-//     <a href="/detail/${show.id}">
-//       <div class="card ${show.principal ? 'principal' : 'secondary close'}">
-//         <header class="card-header">
-//           <h2>${show.name}</h2>
-//         </header>
-//         <div class="card-content">
-//           <div class="card-content-image">
-//             <img src="${show.image ? show.image.medium : '/src/images/default.jpg'}">
-//           </div>
-//           <div class="card-content-text">
-//             <p>${show.summary}
-//             </p>
-//             <div class="rating-container">
-//               <button class="icon">
-//                 <i class="fas fa-star"></i>
-//               </button>
-//               <button class="icon">
-//                 <i class="far fa-star"></i>
-//               </button>
-//               <button class="icon">
-//                 <i class="far fa-star"></i>
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </a>
-//   `;
-// };
 
 //Pinta en base a un elemento (element.innerHTML) y [un array]: una serie de items que sean shows (htmlShows)
 //Recibe el elemento y un listado de items (Shows)
@@ -141,23 +104,6 @@ export const renderShows = (element, items) => {
   });
 };
 
-// Pintará los shows
-// const renderHomeShows = async text => {
-//   try {
-//     renderLoader('hide', 'show');
-//     const shows = await getShows(text);
-//     const mainSection = document.querySelector('main');
-//     //Función a la que le pasamos la sección del elemento y todos los items
-//     renderShows(mainSection, shows);
-//   } catch (err) {
-//     console.log(err);
-//     // Manejador de error a nivel UI
-//   } finally {
-//     renderLoader('show', 'hide');
-//   }
-// };
-
-
 //Pinta sobre un selector concreto en la Home (document.querySelector('main');)
 //Éste lleva ya acoplado que tenga que pertenecer a éste selector (main).
 //Pintará los shows (Siempre que le pase un texto va a renderizar shows)
@@ -166,13 +112,10 @@ const renderHomeShows = async (text, month, year) => {
     //Previsualiza el efecto loader mientras consigue los datos de la API
     renderLoader('hide', 'show');
 
-
     // getShowsTypeBeer(text)
     //   .then((showsTypeBeer) => {
     //     console.log("showsTypeBeer::::", showsTypeBeer);
     //   });
-
-    // console.log("Estamos en renderHomeShows (Mes y Año):", month, year);
 
     const showsTypeBeer = await getShowsTypeBeer(text, month, year);
     const mainSection = document.querySelector('main');
@@ -181,8 +124,6 @@ const renderHomeShows = async (text, month, year) => {
     //Función a la que le pasamos la sección del elemento y todos los items
     renderShows(mainSection, showsTypeBeer);
 
-    
-    
     // const shows = await getShows(text);
     // const mainSection = document.querySelector('main');
     // //Función a la que le pasamos la sección del elemento y todos los items
@@ -198,15 +139,3 @@ const renderHomeShows = async (text, month, year) => {
 };
 
 export default renderHomeShows;
-
-
-
-
-
-
-
-
-
-
-
-

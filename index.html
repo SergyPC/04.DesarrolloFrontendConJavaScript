@@ -24,8 +24,8 @@
           ya que tenemos los estados validity para jugar con los estados de error-->
           <form id="search-form" class="filter-input" novalidate>
             <input data-pattern-mismatch="Input invalid" required placeholder="search your Beer" class="input search" type="text">
-            <input required placeholder="mm" name="month" id="month" class="input month" type="text" maxlength="2">
-            <input required placeholder="aaaa" name="year" id="year" class="input year" type="text" maxlength="4">
+            <input type="text" placeholder="mm" name="month" id="month" class="input month" maxlength="2" pattern="[0-9]{2}">
+            <input type="text" placeholder="aaaa" name="year" id="year" class="input year" maxlength="4" pattern="[0-9]{4}">
             <button type="submit" class="button search">Search</button>
           </form>
         </div>
