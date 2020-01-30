@@ -14,9 +14,14 @@
   },
   "scripts": {
     "init:lint": "./node_modules/.bin/eslint --init",
-    "fix:lint": "./node_modules/.bin/eslint './src/js/*' --fix",
-    "lint": "./node_modules/.bin/eslint './src/js/*'",
+    "fix:lint": "./node_modules/.bin/eslint ./src/js/* --fix",
+    "lint": "./node_modules/.bin/eslint ./src/js/*",
     "start": "node server.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "keywords": [],
   "author": "",
