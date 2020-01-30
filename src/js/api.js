@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const API_KEY = 'K8DSA0C-DKZ44V1-GEHS35S-R5ECFWV';
 
 //Cuando yo llame a api() esta devolverá un objeto que tiene getShows que es una función a la vez:

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { replace } from './ui.js';
 import renderHomeShows from './shows.js';
 import storage from './storage.js';

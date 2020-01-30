@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import api from './api.js';
 import { renderLoader } from './ui.js';
 

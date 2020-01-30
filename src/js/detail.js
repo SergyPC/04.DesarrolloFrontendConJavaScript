@@ -1,22 +1,46 @@
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable object-curly-newline */
+/* eslint-disable nonblock-statement-body-position */
+/* eslint-disable curly */
+/* eslint-disable import/extensions */
+/* eslint-disable no-undef */
+/* eslint-disable max-len */
+
+/* eslint-disable */
+
 import api from './api.js';
 import { renderLoader } from './ui.js';
 
 const getMalts = (malt) => {
   let htmlCode = '';
-  malt.forEach(element => {
+  malt.forEach((element) => {
     htmlCode += `${element.name}: ${element.amount.value} ${element.amount.unit}<br>`;
   });
   return htmlCode;
-}
+};
 
 const getHops = (malt) => {
   let htmlCode = '<p>';
-  malt.forEach(element => {
+  malt.forEach((element) => {
     htmlCode += `${element.name}: ${element.amount.value} ${element.amount.unit} (Add ${element.add} ${element.attribute})<br>`;
   });
   htmlCode += '</p>';
   return htmlCode;
-}
+};
+
+// Nos servirá para limpiar esa parte del formulario cuando cuando navegemos a otras páginas
+// Este removeForm será llamdo en las rutas (routes.js)
+export const removeForm = () => {
+  const formSection = document.querySelector('#detailSection');
+  formSection.innerHTML = '';
+};
+
+const quoteTemplate = ({ quote, date }) => `
+  <div class="list-item">
+    <p>${quote}</p>
+    <span>${date}</span>
+  </div>
+`;
 
 const { getShowDetail } = api();
 
@@ -57,17 +81,17 @@ const detailTeplate = ({ beerId, name, image, description, firstBrewed, price, i
 const renderDetail = async id => {
   try {
     renderLoader('hide', 'show');
-    //const detail = await Promise.all([          //Retorna (un array: [resolveP1, resolveP2]) lo que devuelve el resolve de la promesa1 y el resolve de la promesa2
-    const [detail, quotes] = await Promise.all([  //Para no retocar el codigo hacemos restructuring en la constante detail (que ahora mismo es un array [resolveP1, resolveP2]):
+    // const detail = await Promise.all([          //Retorna (un array: [resolveP1, resolveP2]) lo que devuelve el resolve de la promesa1 y el resolve de la promesa2
+    const [detail, quotes] = await Promise.all([  // Para no retocar el codigo hacemos restructuring en la constante detail (que ahora mismo es un array [resolveP1, resolveP2]):
       getShowDetail(id),
       getQuotes(id),
     ]); 
     
     const template = detailTeplate(detail.beer);
-    //Cogemos el selector "main" del index.html
+    // Cogemos el selector "main" del index.html
     const mainSection = document.querySelector('main');
-    //Pintamos el formulario antes que los comentarios (quoteList) porque #quoteList forma parte del formulario (En quotesFormtemplate hay un DIV quoteList)
-    //Y si no ha sido pintado previamente no puede ser encontrado en el DOM y "document.querySelector('#quoteList')" devolvería NULL
+    // Pintamos el formulario antes que los comentarios (quoteList) porque #quoteList forma parte del formulario (En quotesFormtemplate hay un DIV quoteList)
+    // Y si no ha sido pintado previamente no puede ser encontrado en el DOM y "document.querySelector('#quoteList')" devolvería NULL
     renderForm(id);
     const quoteList = document.querySelector('#quoteList');
     quoteList.innerHTML = quotes.map(quoteTemplate).join(''); // [1, 3] -> '13'
@@ -96,14 +120,14 @@ const quotesFormtemplate = `
   </form>
 `;
 
-const QUOTES_API = 'https://quotes-api-keepcoding.herokuapp.com/api/v1'
+const QUOTES_API = 'https://quotes-api-keepcoding.herokuapp.com/api/v1';
 
 const { getQuotes, createQuote } = api(QUOTES_API);
 
 const renderForm = id => {
   const formSection = document.querySelector('#detailSection');
   formSection.innerHTML = quotesFormtemplate; // Pintamos el Formulario.
-  //A partir de aquí puedo utilizar el resto de selectores que pinta el formulario (Ya que ha sido pintado)
+  // A partir de aquí puedo utilizar el resto de selectores que pinta el formulario (Ya que ha sido pintado)
   const quoteForm = document.getElementById('quote-form');
   const quoteList = document.querySelector('#quoteList');
   const quoteInput = document.getElementById('quote');
@@ -128,23 +152,9 @@ const renderForm = id => {
         quote: quoteInput.value,
         date: new Date(),
       });
-      quoteInput.value = ''; //Limpia el input text donde añadimos el comentario.
+      quoteInput.value = ''; // Limpia el input text donde añadimos el comentario.
     }
   });
 };
-
-//Nos servirá para limpiar esa parte del formulario cuando cuando navegemos a otras páginas
-//Este removeForm será llamdo en las rutas (routes.js)
-export const removeForm = () => {
-  const formSection = document.querySelector('#detailSection');
-  formSection.innerHTML = '';
-};
-
-const quoteTemplate = ({ quote, date }) => `
-  <div class="list-item">
-    <p>${quote}</p>
-    <span>${date}</span>
-  </div>
-`;
 
 export default renderDetail;

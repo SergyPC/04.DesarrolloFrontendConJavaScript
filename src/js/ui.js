@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**Gestionamos elementos del UI**/
 
 //Función  que retorna otra función y la segunda función tiene a elemento como parte de ella (de su propio contexto).

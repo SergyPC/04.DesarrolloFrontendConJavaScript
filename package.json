@@ -8,10 +8,13 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.0"
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.0",
+    "husky": "^4.2.1"
   },
   "scripts": {
     "init:lint": "./node_modules/.bin/eslint --init",
+    "fix:lint": "./node_modules/.bin/eslint './src/js/*' --fix",
     "lint": "./node_modules/.bin/eslint './src/js/*'",
     "start": "node server.js"
   },

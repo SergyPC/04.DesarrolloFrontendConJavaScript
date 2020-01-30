@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /** 
  * PARA QUE FUNCIONE EL SERVIDOR QUE ESCUCHA EN EL PUERTO 3000:
  * Hay que abrir la consola de MS-DOS y acceder a la carpeta donde esté el proyecto
