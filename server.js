@@ -34,7 +34,7 @@
 //Creamos nuestro servidor que escucha en el puerto 3000
 
 const express = require('express'); //Importo el módulo express
-const PORT = 3000; //Creo una variable con el puerto 3000
+const PORT = process.env.PORT || 3000; //Creo una variable con el puerto 3000
 
 const app = express(); //La variable app llamará a la función express, que es lo que exporta la librería de express (Esto viene en la documentación de express)
 
