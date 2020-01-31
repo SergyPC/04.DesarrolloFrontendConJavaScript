@@ -2,6 +2,27 @@
 
 [![N|Solid](https://sobrevivientes.mx/app/uploads/2019/03/Brindis.jpg)](https://beerflix-api.herokuapp.com/api-docs)
 
+Debéis tener instalado NODE:
+```
+https://nodejs.org/es/
+```
+Intalar dependencias:
+```
+npm install
+```
+Para arrancar esta aplicación, ejecutar:
+```
+node server.js
+```
+
+<br/>
+
+## Nota para Kevin
+
+La aplicación ha sido desplegada en Heroku, en la siguiente URL: 
+https://beerflix-app.herokuapp.com/
+
+<br/>
 
 ## Briefing
 
