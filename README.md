@@ -17,7 +17,7 @@ node server.js
 
 <br/>
 
-## Nota para Kevin
+## Aplicación desplegada en Heroku
 
 La aplicación ha sido desplegada en Heroku, en la siguiente URL: 
 https://beerflix-app.herokuapp.com/

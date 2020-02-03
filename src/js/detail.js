@@ -35,16 +35,16 @@ export const removeForm = () => {
   formSection.innerHTML = '';
 };
 
-const quoteTemplate = ({ quote, date }) => `
+const quoteTemplate = ({ comment, dateComment }) => `
   <div class="list-item">
-    <p>${quote}</p>
-    <span>${date}</span>
+    <p>${comment}</p>
+    <span>${dateComment}</span>
   </div>
 `;
 
 const { getShowDetail } = api();
 
-const detailTeplate = ({ beerId, name, image, description, firstBrewed, price, ingredients } = {}) => `
+const detailTeplate = ({ beerId, name, image, description, firstBrewed, price, ingredients, comments } = {}) => `
   <div class="detail-section">
     <header id="${beerId}">
       <div class="title-section">
@@ -81,20 +81,22 @@ const detailTeplate = ({ beerId, name, image, description, firstBrewed, price, i
 const renderDetail = async id => {
   try {
     renderLoader('hide', 'show');
-    // const detail = await Promise.all([          //Retorna (un array: [resolveP1, resolveP2]) lo que devuelve el resolve de la promesa1 y el resolve de la promesa2
-    const [detail, quotes] = await Promise.all([  // Para no retocar el codigo hacemos restructuring en la constante detail (que ahora mismo es un array [resolveP1, resolveP2]):
+    //const detail = await Promise.all([          //Retorna (un array: [resolveP1, resolveP2]) lo que devuelve el resolve de la promesa1 y el resolve de la promesa2
+    //const [detail, quotes] = await Promise.all([  // Para no retocar el codigo hacemos restructuring en la constante detail (que ahora mismo es un array [resolveP1, resolveP2]):
+    const [detail] = await Promise.all([  // Para no retocar el codigo hacemos restructuring en la constante detail (que ahora mismo es un array [resolveP1, resolveP2]):
       getShowDetail(id),
-      getQuotes(id),
+      // getQuotes(id),
     ]); 
     
     const template = detailTeplate(detail.beer);
+
     // Cogemos el selector "main" del index.html
     const mainSection = document.querySelector('main');
     // Pintamos el formulario antes que los comentarios (quoteList) porque #quoteList forma parte del formulario (En quotesFormtemplate hay un DIV quoteList)
     // Y si no ha sido pintado previamente no puede ser encontrado en el DOM y "document.querySelector('#quoteList')" devolvería NULL
     renderForm(id);
     const quoteList = document.querySelector('#quoteList');
-    quoteList.innerHTML = quotes.map(quoteTemplate).join(''); // [1, 3] -> '13'
+    quoteList.innerHTML = detail.beer.comments.map(quoteTemplate).join(''); // [1, 3] -> '13'
     mainSection.innerHTML = template;
   } catch (err) {
     // manejo errores a través de un POPUP utilizando el DOM con selectores
@@ -120,9 +122,10 @@ const quotesFormtemplate = `
   </form>
 `;
 
-const QUOTES_API = 'https://quotes-api-keepcoding.herokuapp.com/api/v1';
+const QUOTES_API = 'https://beerflix-api.herokuapp.com/api/v1/beers';
 
-const { getQuotes, createQuote } = api(QUOTES_API);
+//const { getQuotes, createQuote } = api(QUOTES_API);
+const { createQuote } = api(QUOTES_API);
 
 const renderForm = id => {
   const formSection = document.querySelector('#detailSection');
@@ -149,8 +152,8 @@ const renderForm = id => {
       //              pero lo que hago es traer toda la lista para pintarla como 
       //              en la función renderDetail
       quoteList.innerHTML += quoteTemplate({
-        quote: quoteInput.value,
-        date: new Date(),
+        comment: quoteInput.value,
+        dateComment: new Date(),
       });
       quoteInput.value = ''; // Limpia el input text donde añadimos el comentario.
     }

@@ -10,12 +10,9 @@ const API_KEY = 'K8DSA0C-DKZ44V1-GEHS35S-R5ECFWV';
 //Por eso después se puede hacer el destructurado de esa api en shows.js (const { getShows } = api();), ya que es un objeto que tiene una función.
 //const api = (apiURL = 'https://api.tvmaze.com') => {
 //a apiURL le damos un valor por defecto: 
-//http://api.tvmaze.com/shows
-
 // https://beerflix-api.herokuapp.com/api/v1/beers?limit=10 //Devuelve las cervezas (max 10)
 // https://beerflix-api.herokuapp.com/api/v1/beers?search=beer&limit=10 //Devuelve las cervezas (max 10) cuya palabra clave sea beer
 // https://beerflix-api.herokuapp.com/api/v1/beers/20 //Devuelve la cerveza cuyo id=20
-
 const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
   //const searchAPIEndpoint = `${apiURL}/search/shows?q`;
   //EJEMPLO: http://api.tvmaze.com/search/shows?q=girls
@@ -73,8 +70,8 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
 
         const showsTypeBeer = filteredData;
         //const showsTypeBeer = data.beers;
-
         return showsTypeBeer;
+
         // const shows = data.map(result => {
         //   if (result.show) {
         //     return result.show;
@@ -87,37 +84,61 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
         throw err;
       }
     },
-    getShowDetail: id => {
-      //return fetch(`${showsAPIEndpoint}/${id}`)
-      return fetch(`${showsAPIEndpoint}/${id}`, {
-        method: 'GET',
-         headers: {
-           'X-API-KEY': API_KEY,
-         },
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error retrieving show id: ${id}`);          }
-            return response.json();
-        })
-        /*Nos podemos ahorrar este ".then(detail => {" porque la promesa de arriba devuelve un "response.json();"
-        ¿Qué es response.json();? Una promesa
-        Entonces cuando ésto está resuelto lo que devuelve en renderDetail (detail.js) 
-        Y el response.json(); lo que devuelve es el "data", que es el "detalle".
-        Por eso no haría falta poner este codigo comentado (aunque también funcionaría con él pero sería redundante):*/
-        // .then(detail => {
-        //   return detail;
-        // })
-        .catch(err => {
-          console.error(err.message);
-          throw err;
+    // getShowDetail: id => {
+    //   return fetch(`${showsAPIEndpoint}/${id}`, {
+    //     method: 'GET',
+    //      headers: {
+    //        'X-API-KEY': API_KEY,
+    //      },
+    //   })
+    //     .then(response => {
+    //       if (!response.ok) {
+    //         throw new Error(`Error retrieving show id: ${id}`);
+    //       }
+    //       return response.json();
+    //     })
+    //     /*Nos podemos ahorrar este ".then(detail => {" porque la promesa de arriba devuelve un "response.json();"
+    //     ¿Qué es response.json();? Una promesa
+    //     Entonces cuando ésto está resuelto lo que devuelve en renderDetail (detail.js) 
+    //     Y el response.json(); lo que devuelve es el "data", que es el "detalle".
+    //     Por eso no haría falta poner este codigo comentado (aunque también funcionaría con él pero sería redundante):*/
+    //     // .then(detail => {
+    //     //   return detail;
+    //     // })
+    //     .catch(err => {
+    //       console.error(err.message);
+    //       throw err;
+    //     });
+    // },
+    getShowDetail: async id => {
+      try {
+        const response = await fetch(`${showsAPIEndpoint}/${id}`, {
+          method: 'GET',
+          headers: {
+            'X-API-KEY': API_KEY,
+          },
         });
+        if (!response.ok) {
+          throw new Error(`Error retrieving show id: ${id}`);
+        }
+        return response.json();
+      }
+      catch (err) {
+        console.error(err.message);
+        throw err;
+      }
     },
     getQuotes: async id => {
       try {
-        const response = await fetch(`${apiURL}/quote/${id}`);
-        //console.log (`getQuotes-apiURL: ${apiURL}/quote/${id}`);
-        //https://quotes-api-keepcoding.herokuapp.com/api/v1/quote/20
+        //console.log (`getQuotes-apiURL: ${apiURL}/${id}/comment`);
+        //https://beerflix-api.herokuapp.com/api/v1/beers/15/comment
+        const response = await fetch(`${apiURL}/${id}/comment`, {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+            'X-API-KEY': API_KEY,
+          },
+        });
         if (!response.ok) {
           throw new Error('Error getQuotes');
         }
@@ -130,15 +151,14 @@ const api = (apiURL = 'https://beerflix-api.herokuapp.com/api/v1/beers') => {
     },
     createQuote: async (id, text) => {
       try {
-        const response = await fetch(`${apiURL}/quote/${id}`, {
+        const response = await fetch(`${apiURL}/${id}/comment`, {
           method: 'POST',
-          body: JSON.stringify({ quote: text }),
+          body: JSON.stringify({ comment: text }),
           headers: {
             'Content-type': 'application/json',
             'X-API-KEY': API_KEY,
           },
         });
-        //console.log(response);
         if (!response.ok) {
           throw new Error('Error createQuote');
         }
